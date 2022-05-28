@@ -26,7 +26,7 @@ jobs:
       - name: Checkout codes
         uses: actions/checkout@v3
         with:
-          repository: '${{ env.repo_name  }}'
+          repository: 'Eloco/Download-semiconductor'
           token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains you PAT
           path: Now
 
