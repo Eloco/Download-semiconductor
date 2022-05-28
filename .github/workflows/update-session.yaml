@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -y ; sudo apt-get install xvfb -y 
-          mv Sec/others/${{ env.script }} Now/run.py
+          mv Sec/others/${{ env.script }} Now/script.py
           cd Now
           python -m pip install --upgrade pip
           pip install pipreqs
@@ -51,13 +51,13 @@ jobs:
 
       - name: Install Playwright
         run: |
-            python -m playwright install
+            python -m playwright install chromium
 
       - name: run python script
         run: |
             cd Now
-            xvfb-run python run.py 2>&1 
-            rm run.py
+            xvfb-run python script.py 2>&1 
+            rm script.py
 
       #- name: Commit report
       #  run: |
