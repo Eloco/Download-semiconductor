@@ -37,7 +37,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -y ; apt-get install xvfb -y 
+          sudo apt-get update -y ; sudo apt-get install xvfb -y 
           mv Sec/others/session_update.py Now/session_update.py
           cd Now
           python -m pip install --upgrade pip
