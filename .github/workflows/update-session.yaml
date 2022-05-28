@@ -45,7 +45,7 @@ jobs:
           pip install -r requirements.txt
           rm requirements.txt
 
-      - uses: microsoft/playwright-github-action@v1
+      #- uses: microsoft/playwright-github-action@v1
 
       - name: Install Playwright
         run: |
