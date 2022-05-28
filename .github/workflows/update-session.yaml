@@ -11,6 +11,11 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - script: session_update.py  
+          - script: session1_update.py
     steps:
       - name: Checkout codes Sec
         uses: actions/checkout@v3
@@ -34,7 +39,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -y ; sudo apt-get install xvfb -y 
-          mv Sec/others/session_update.py Now/session_update.py
+          mv Sec/others/${{ env.script }} Now/run.py
           cd Now
           python -m pip install --upgrade pip
           pip install pipreqs
@@ -51,8 +56,8 @@ jobs:
       - name: run python script
         run: |
             cd Now
-            xvfb-run python session_update.py 2>&1 
-            rm session_update.py
+            xvfb-run python run.py 2>&1 
+            rm run.py
 
       #- name: Commit report
       #  run: |
