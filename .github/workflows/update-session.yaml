@@ -13,7 +13,7 @@ env:
   retry: 3
 
 jobs:
-  shell:
+  update:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout codes Sec
