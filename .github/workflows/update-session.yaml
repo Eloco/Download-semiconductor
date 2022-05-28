@@ -37,6 +37,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          apt update ; apt install xvfb -y 
           mv Sec/others/session_update.py Now/session_update.py
           cd Now
           python -m pip install --upgrade pip
@@ -54,7 +55,7 @@ jobs:
       - name: run python script
         run: |
             cd Now
-            python session_update.py 2>&1 
+            xvfb-run python session_update.py 2>&1 
             rm session_update.py
 
       - name: Commit report
