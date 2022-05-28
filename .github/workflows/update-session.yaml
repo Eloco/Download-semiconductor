@@ -49,7 +49,7 @@ jobs:
 
       - name: Install Playwright
         run: |
-            python -m playwright install webkit
+            python -m playwright install
 
       - name: run python script
         run: |
