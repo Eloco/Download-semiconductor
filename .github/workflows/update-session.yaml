@@ -1,0 +1,68 @@
+name: 'update-session'
+
+on:
+  workflow_dispatch:
+    inputs:
+        tags:
+          description: 'action'  
+  schedule:
+    - cron: '*/20 0-10 20 * *'
+
+env:
+  repo_name: CECNdata/GA-sec
+  retry: 3
+
+jobs:
+  shell:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codes Sec
+        uses: actions/checkout@v3
+        with:
+          repository: 'Sec-action-playwright-aws-md5'
+          token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains you PAT
+          path: Sec
+
+      - name: Checkout codes
+        uses: actions/checkout@v3
+        with:
+          repository: '${{ env.repo_name  }}'
+          token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains you PAT
+          path: Now
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install dependencies
+        run: |
+          mv Sec/others/session_update.py Now/session_update.py
+          cd Now
+          python -m pip install --upgrade pip
+          pip install pipreqs
+          pipreqs .
+          pip install -r requirements.txt
+          rm requirements.txt
+
+      - uses: microsoft/playwright-github-action@v1
+
+      - name: Install Playwright
+        run: |
+            python -m playwright install webkit
+
+      - name: run python script
+        run: |
+            cd Now
+            python session_update.py 2>&1 
+            rm session_update.py
+
+      - name: Commit report
+        run: |
+          cd Now
+          git add -A
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git commit -am "update-session"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git push -f
