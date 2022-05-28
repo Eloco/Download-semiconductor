@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -y ; sudo apt-get install xvfb -y 
-          mv Sec/others/${{ env.script }} Now
+          mv Sec/others/${{ matrix.script }} Now
           cd Now
           python -m pip install --upgrade pip
           pip install pipreqs
@@ -56,7 +56,7 @@ jobs:
       - name: run python script
         run: |
             cd Now
-            xvfb-run python ${{ env.script }} 2>&1 
+            xvfb-run python ${{ matrix.script }} 2>&1 
             rm script.py
 
       #- name: Commit report
