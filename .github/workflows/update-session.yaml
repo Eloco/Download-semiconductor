@@ -6,11 +6,7 @@ on:
         tags:
           description: 'action'  
   schedule:
-    - cron: '*/20 0-10 20 * *'
-
-env:
-  repo_name: CECNdata/GA-sec
-  retry: 3
+    - cron: '0 */6 * * *'
 
 jobs:
   update:
